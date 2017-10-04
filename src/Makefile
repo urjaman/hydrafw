@@ -263,7 +263,7 @@ include $(RULESPATH)/rules.mk
 
 # Anything that depends on FORCE will be considered out-of-date
 FORCE:
-.PHONY: FORCE
+.PHONY: FORCE program
 
 %.hdr: FORCE
 ifeq ($(USE_VERBOSE_COMPILE),yes)
@@ -283,6 +283,11 @@ else
 	@echo Creating $@
 	@python build-scripts/dfu-convert.py -i $< $@
 endif
+
+# This is a hack, but i dont want to re-link on every make program.
+program:
+	@if [ ! -f $(BUILDDIR)/$(PROJECT).dfu ]; then echo "Please call make before make program." ; exit 1; else true; fi
+	dfu-util -d 0483:df11 -a 0 -D $(BUILDDIR)/$(PROJECT).dfu
 
 # This rule hook is defined in the ChibiOS build system
 PRE_MAKE_ALL_RULE_HOOK: ./common/hydrafw_version.hdr
