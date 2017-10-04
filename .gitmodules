@@ -4,3 +4,9 @@
 [submodule "chibios"]
 	path = src/chibios
 	url = https://github.com/hydrabus/ChibiOS.git
+[submodule "src/libfrser"]
+	path = src/libfrser
+	url = https://github.com/urjaman/libfrser
+[submodule "src/frser/libfrser"]
+	path = src/frser/libfrser
+	url = https://github.com/urjaman/libfrser
