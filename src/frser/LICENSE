@@ -1,0 +1,5 @@
+All hydrabus-only code is licensed under the Apache License 2.0 as is the rest of HydraBus.
+Libfrser is under GPLv3 for the purposes of this integration with HydraBus.
+
+To get rid of GPLv3 influence: HYDRAFW_FRSER = 0 in the main Makefile, and then the
+libfrser submodule does not even need to be checked out.

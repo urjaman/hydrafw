@@ -45,6 +45,10 @@
 
 #define INIT_SCRIPT_NAME "initscript"
 
+#ifdef HYDRAFW_FRSER
+#include "frser/hydrafw-frser.h"
+#endif
+
 volatile int nb_console = 0;
 
 /* USB1: Virtual serial port over USB. */
@@ -100,6 +104,13 @@ THD_FUNCTION(console, arg)
 				sump(con);
 			}
 			break;
+#ifdef HYDRAFW_FRSER
+		case 0x10: /* serprog SYNCNOP, used by flashrom for sync after 8 NOPs (0s) */
+			if (i == 8) {
+				run_frser(con, 1);
+			}
+			break;
+#endif
 		default:
 			i=0;
 			tl_input(con->tl, input);

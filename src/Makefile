@@ -9,10 +9,17 @@ MAKEFLAGS += --no-builtin-rules
 #Set to 1 HYDRAFW_NFC to include HydraNFC extension support
 export HYDRAFW_NFC ?= 1
 
+#Set to 1 to include flashrom serprog (libfrser) support
+export HYDRAFW_FRSER ?= 1
+
 HYDRAFW_OPTS =
 
 ifeq ($(HYDRAFW_NFC),1)
 HYDRAFW_OPTS += -DHYDRANFC
+endif
+
+ifeq ($(HYDRAFW_FRSER),1)
+HYDRAFW_OPTS += -DHYDRAFW_FRSER
 endif
 
 # Compiler options here.
@@ -191,6 +198,11 @@ ifeq ($(HYDRAFW_NFC),1)
 INCDIR += $(TRFINC) \
           $(HYDRANFCINC)
 endif
+
+ifeq ($(HYDRAFW_FRSER),1)
+include frser/frser.mk
+endif
+
 
 #
 # Project, sources and paths
